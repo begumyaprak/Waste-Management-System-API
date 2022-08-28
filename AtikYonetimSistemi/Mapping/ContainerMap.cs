@@ -21,16 +21,25 @@ namespace AtikYonetimSistemi.Mapping
                 x.Generator(Generators.Identity);
             });
 
-            Property(b => b.containername);
-            Property(b => b.latitude);
-            Property(b => b.longitude);
+            Property(b => b.containername , x => {
+                x.Type(NHibernateUtil.String);
+                x.Column("containername");
+                x.Length(50);
+            });
+
+            Property(b => b.latitude , x => {
+                x.Type(NHibernateUtil.Double);
+                x.Column("latitude");
+            });
 
 
-            ///??
-         
-            ManyToOne(x => x.vehicle, x => x.Column("vehicleId"));
+            Property(b => b.longitude, x => {
+                x.Type(NHibernateUtil.Double);
+                x.Column("longitude");
+            });
 
-            ///
+
+          
 
             Table("container");
         }

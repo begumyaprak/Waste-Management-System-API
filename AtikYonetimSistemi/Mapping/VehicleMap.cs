@@ -17,10 +17,20 @@ namespace AtikYonetimSistemi.Mapping
                 x.Column("id");
                 x.UnsavedValue(0);
                 x.Generator(Generators.Identity);
+                
             });
 
-            Property(b => b.vehiclename);
-            Property(b => b.vehicleplate);
+            Property(b => b.vehiclename, x => {
+                x.Type(NHibernateUtil.String);
+                x.Column("vehiclename");
+                x.Length(50);
+            });
+
+            Property(b => b.vehicleplate, x => {
+                x.Type(NHibernateUtil.String);
+                x.Column("vehicleplate");
+                x.Length(50);
+            });
 
 
             Table("vehicle");

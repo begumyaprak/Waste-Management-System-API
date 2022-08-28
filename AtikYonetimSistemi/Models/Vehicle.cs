@@ -11,6 +11,5 @@ namespace AtikYonetimSistemi.Models
 
 
 
-
 	}
 }

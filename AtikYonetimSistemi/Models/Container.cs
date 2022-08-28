@@ -13,12 +13,7 @@ namespace AtikYonetimSistemi.Models
 
 		public virtual int vehicleId { get; set; }
 
-		public virtual Vehicle vehicle { get; set; }
-
-
-
-
-
+		
 
 
 	}
