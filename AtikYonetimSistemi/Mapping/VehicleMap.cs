@@ -13,26 +13,15 @@ namespace AtikYonetimSistemi.Mapping
         {
             Id(x => x.id, x =>
             {
-                x.Type(NHibernateUtil.Int64);
+                x.Type(NHibernateUtil.Int32);
                 x.Column("id");
                 x.UnsavedValue(0);
-                x.Generator(Generators.Increment);
-                
+                x.Generator(Generators.Identity);
             });
 
-            Property(b => b.vehicleName, x =>
-            {
-                x.Length(50);
-                x.Type(NHibernateUtil.String);
-                x.NotNullable(true);
-            });
-            Property(b => b.vehiclePlate, x =>
-            {
-                x.Length(50);
-                x.Type(NHibernateUtil.String);
-                x.NotNullable(true);
-            });
-            
+            Property(b => b.vehiclename);
+            Property(b => b.vehicleplate);
+
 
             Table("vehicle");
         }

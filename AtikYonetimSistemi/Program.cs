@@ -9,18 +9,13 @@ using Microsoft.Extensions.Logging;
 
 namespace AtikYonetimSistemi
 {
+    
+
+
     public class Program
     {
         public static void Main(string[] args)
         {
-
-
-            // Read Configuration from appSettings
-            var config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
-
-
             CreateHostBuilder(args).Build().Run();
         }
 

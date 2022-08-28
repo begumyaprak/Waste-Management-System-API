@@ -3,6 +3,7 @@ using AtikYonetimSistemi.Mapping;
 using NHibernate;
 using System.Linq;
 using AtikYonetimSistemi.Models;
+using System.Threading.Tasks;
 
 namespace AtikYonetimSistemi.Context
 {
@@ -10,60 +11,55 @@ namespace AtikYonetimSistemi.Context
     public class ContainerMapperSession : IContainerMapperSession
     {
 
-        private readonly ISession session;
-        private ITransaction transaction;
+        private readonly ISession _session;
+        private ITransaction _transaction;
 
         public ContainerMapperSession(ISession session)
         {
 
-            this.session = session;
+            _session = session;
 
         }
 
-        public IQueryable<Container> Containers => session.Query<Container>();
+        public IQueryable<Container> Container => _session.Query<Container>();
 
         public void BeginTransaction()
         {
-            transaction = session.BeginTransaction();
+            _transaction = _session.BeginTransaction();
         }
 
 
-        public void Commit()
+        public async Task Commit()
         {
-            transaction.Commit();
+            await _transaction.CommitAsync();
         }
 
-        public void Rollback()
+        public async Task Rollback()
         {
-            transaction.Rollback();
+            await _transaction.RollbackAsync();
         }
 
 
         public void CloseTransaction()
         {
-            if (transaction != null)
+            if (_transaction != null)
             {
-                transaction.Dispose();
-                transaction = null;
+                _transaction.Dispose();
+                _transaction = null;
             }
         }
 
 
-        public void Save(Container entity)
+        public async Task Save(Container entity)
         {
-            session.Save(entity);
+            await _session.SaveOrUpdateAsync(entity);
 
         }
 
-        public void Update(Container entity)
-        {
-            session.Save(entity);
-        }
 
-
-        public void Delete(Container entity)
+        public async Task Delete(Container entity)
         {
-            session.Save(entity);
+           await _session.DeleteAsync(entity);
         }
     }
 

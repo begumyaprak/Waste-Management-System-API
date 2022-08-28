@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using AtikYonetimSistemi.Models;
 
 namespace AtikYonetimSistemi.Context
@@ -7,14 +8,14 @@ namespace AtikYonetimSistemi.Context
     public interface IContainerMapperSession
     {
         void BeginTransaction();
-        void Commit();
-        void Rollback();
+        Task Commit();
+        Task Rollback();
         void CloseTransaction();
-        void Save(Container entity);
-        void Update(Container entity);
-        void Delete(Container entity);
+        Task Save(Container entity);
+        Task Delete(Container entity);
 
-        IQueryable<Container> Containers { get; }
+        IQueryable<Container> Container { get; }
+
     }
 }
 

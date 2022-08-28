@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using AtikYonetimSistemi.Models;
 
 namespace AtikYonetimSistemi.Context
@@ -7,14 +8,13 @@ namespace AtikYonetimSistemi.Context
     public interface IVehicleMapperSession
     {
         void BeginTransaction();
-        void Commit();
-        void Rollback();
+        Task Commit();
+        Task Rollback();
         void CloseTransaction();
-        void Save(Vehicle entity);
-        void Update(Vehicle entity);
-        void Delete(Vehicle entity);
+        Task Save(Vehicle entity);
+        Task Delete(Vehicle entity);
 
-        IQueryable<Vehicle> Vehicles { get; }
+        IQueryable<Vehicle> Vehicle { get; }
     }
 }
 

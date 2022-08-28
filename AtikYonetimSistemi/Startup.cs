@@ -29,8 +29,8 @@ namespace AtikYonetimSistemi
         {
 
             // hibernate
-            var connStr = Configuration.GetConnectionString("PostgreSqlConnection");
-            services.AddNHibernatePosgreSql(connStr);
+            var connStr = Configuration.GetConnectionString("DefaultConnection");
+            services.AddNHibernate(connStr);
 
 
 

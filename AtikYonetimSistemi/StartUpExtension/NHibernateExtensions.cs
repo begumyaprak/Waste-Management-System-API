@@ -11,7 +11,7 @@ namespace AtikYonetimSistemi.StartUpExtension
 {
     public static class NHibernateExtensions
     {
-        public static IServiceCollection AddNHibernatePosgreSql(this IServiceCollection services, string connectionString)
+        public static IServiceCollection AddNHibernate(this IServiceCollection services, string connectionString)
         {
             var mapper = new ModelMapper();
             mapper.AddMappings(typeof(NHibernateExtensions).Assembly.ExportedTypes);
@@ -33,17 +33,11 @@ namespace AtikYonetimSistemi.StartUpExtension
 
             services.AddSingleton(sessionFactory);
             services.AddScoped(factory => sessionFactory.OpenSession());
-
-
-            // inject
-            services.AddScoped<IVehicleMapperSession,VehicleMapperSession>();
+            services.AddScoped<IVehicleMapperSession, VehicleMapperSession>();
             services.AddScoped<IContainerMapperSession, ContainerMapperSession>();
 
             return services;
         }
-
-
-
     }
 }
 

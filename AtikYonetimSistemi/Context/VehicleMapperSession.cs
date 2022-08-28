@@ -3,6 +3,7 @@ using NHibernate;
 using System.Linq;
 using AtikYonetimSistemi.Models;
 using AtikYonetimSistemi.Context;
+using System.Threading.Tasks;
 
 namespace AtikYonetimSistemi.Mapping
 {
@@ -10,60 +11,56 @@ namespace AtikYonetimSistemi.Mapping
     public class VehicleMapperSession : IVehicleMapperSession
     {
 
-        private readonly ISession session;
-        private ITransaction transaction;
+        private readonly ISession _session;
+        private ITransaction _transaction;
 
         public VehicleMapperSession(ISession session)
         {
-
-            this.session = session;
+            
+        _session = session;
 
         }
 
-        public IQueryable<Vehicle> Vehicles => session.Query<Vehicle>();
+        public IQueryable<Vehicle> Vehicle => _session.Query<Vehicle>();
 
         public void BeginTransaction()
         {
-            transaction = session.BeginTransaction();
+            _transaction = _session.BeginTransaction();
         }
 
 
-        public void Commit()
+        public async Task Commit()
         {
-            transaction.Commit();
+            await _transaction.CommitAsync();
         }
 
-        public void Rollback()
+        public async Task Rollback()
         {
-            transaction.Rollback();
+           await  _transaction.RollbackAsync();
         }
 
 
         public void CloseTransaction()
         {
-            if (transaction != null)
+            if (_transaction != null)
             {
-                transaction.Dispose();
-                transaction = null;
+                _transaction.Dispose();
+                _transaction = null;
             }
         }
 
 
-        public void Save(Vehicle entity)
+        public async Task Save(Vehicle entity)
         {
-            session.Save(entity);
+            await _session.SaveOrUpdateAsync(entity);
 
         }
 
-        public void Update(Vehicle entity)
-        {
-            session.Save(entity);
-        }
+      
 
-
-        public void Delete(Vehicle entity)
+        public async Task Delete(Vehicle entity)
         {
-            session.Save(entity);
+            await _session.DeleteAsync(entity);
         }
 
 
