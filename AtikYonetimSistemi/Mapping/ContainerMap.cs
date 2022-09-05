@@ -13,33 +13,46 @@ namespace AtikYonetimSistemi.Mapping
 	{
         public ContainerMap()
         {
-            Id(x => x.id, x =>
+
+            //Id
+            Id(x => x.Id, x =>
             {
-                x.Type(NHibernateUtil.Int32);
+                x.Type(NHibernateUtil.Int64);
                 x.Column("id");
                 x.UnsavedValue(0);
-                x.Generator(Generators.Identity);
+                x.Generator(Generators.Increment);
             });
 
-            Property(b => b.containername , x => {
+            //ContainerName
+            Property(x => x.ContainerName , x => {
                 x.Type(NHibernateUtil.String);
                 x.Column("containername");
                 x.Length(50);
             });
 
-            Property(b => b.latitude , x => {
+
+            //Latitude
+            Property(x => x.Latitude , x => {
                 x.Type(NHibernateUtil.Double);
                 x.Column("latitude");
             });
 
-
-            Property(b => b.longitude, x => {
+            //Longitude
+            Property(x => x.Longitude, x => {
                 x.Type(NHibernateUtil.Double);
                 x.Column("longitude");
             });
 
+            //VehicleId
+            Property(x => x.VehicleId,
+               x =>
+               {
+                   x.Type(NHibernateUtil.Int64);
+                   x.Column("vehicleid");
+               });
 
-          
+
+            // table name for this mapping
 
             Table("container");
         }

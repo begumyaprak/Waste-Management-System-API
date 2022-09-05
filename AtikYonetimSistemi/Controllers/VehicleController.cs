@@ -17,25 +17,27 @@ namespace AtikYonetimSistemi.Controllers
 
     public class VehicleController : ControllerBase
     {
-        private readonly IVehicleMapperSession _session;
+        private readonly IMapperSession _session;
 
 
-        public VehicleController(IVehicleMapperSession session)
+        public VehicleController(IMapperSession session)
         {
             _session = session;
 
         }
 
-
+        //method that returns all vehicles
         [HttpGet]
         [Route("GetVehicles")]
         public IActionResult Index()
         {
-            var vehicles = _session.Vehicle.ToList();
+            var vehicles = _session.Vehicles.ToList();
 
             return Ok(vehicles);
         }
 
+
+        //method that add vehicles
         [HttpPost]
         public void Post([FromBody] Vehicle vehicle)
         {
@@ -59,7 +61,7 @@ namespace AtikYonetimSistemi.Controllers
         [HttpPut]
         public ActionResult<Vehicle> Put([FromBody] Vehicle request)
         {
-            Vehicle vehicle = _session.Vehicle.Where(x => x.id == request.id).FirstOrDefault();
+            Vehicle vehicle = _session.Vehicles.Where(x => x.Id == request.Id).FirstOrDefault();
             if (vehicle == null)
             {
                 return NotFound();
@@ -69,8 +71,8 @@ namespace AtikYonetimSistemi.Controllers
             {
                 _session.BeginTransaction();
 
-                vehicle.vehiclename = request.vehiclename;
-                vehicle.vehicleplate = request.vehicleplate;
+                vehicle.VehicleName = request.VehicleName;
+                vehicle.VehiclePlate = request.VehiclePlate;
                 
 
                 _session.Save(vehicle);
@@ -91,11 +93,11 @@ namespace AtikYonetimSistemi.Controllers
             return Ok();
         }
 
-
+        //method that delete vehicle 
         [HttpDelete("{id}")]
         public ActionResult<Vehicle> Delete(int id)
         {
-            Vehicle vehicle = _session.Vehicle.Where(x => x.id == id).FirstOrDefault();
+            Vehicle vehicle = _session.Vehicles.Where(x => x.Id == id).FirstOrDefault();
             if (vehicle == null)
             {
                 return NotFound();

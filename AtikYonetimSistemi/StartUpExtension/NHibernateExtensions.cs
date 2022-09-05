@@ -11,6 +11,8 @@ namespace AtikYonetimSistemi.StartUpExtension
 {
     public static class NHibernateExtensions
     {
+
+        //Nhibernate Extenison for Startup
         public static IServiceCollection AddNHibernate(this IServiceCollection services, string connectionString)
         {
             var mapper = new ModelMapper();
@@ -23,7 +25,7 @@ namespace AtikYonetimSistemi.StartUpExtension
                 c.Dialect<PostgreSQLDialect>();
                 c.ConnectionString = connectionString;
                 c.KeywordsAutoImport = Hbm2DDLKeyWords.AutoQuote;
-                c.SchemaAction = SchemaAutoAction.Update;
+                c.SchemaAction = SchemaAutoAction.Validate;
                 c.LogFormattedSql = true;
                 c.LogSqlInConsole = true;
             });
@@ -33,8 +35,7 @@ namespace AtikYonetimSistemi.StartUpExtension
 
             services.AddSingleton(sessionFactory);
             services.AddScoped(factory => sessionFactory.OpenSession());
-            services.AddScoped<IVehicleMapperSession, VehicleMapperSession>();
-            services.AddScoped<IContainerMapperSession, ContainerMapperSession>();
+            services.AddScoped<IMapperSession, MapperSession>();
 
             return services;
         }

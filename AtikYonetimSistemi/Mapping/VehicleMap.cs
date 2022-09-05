@@ -9,30 +9,34 @@ namespace AtikYonetimSistemi.Mapping
 {
 	public class VehicleMap: ClassMapping<Vehicle>
 	{
+
+
         public VehicleMap()
-        {
-            Id(x => x.id, x =>
+        {  
+            //Id
+            Id(x => x.Id, x =>
             {
-                x.Type(NHibernateUtil.Int32);
+                x.Type(NHibernateUtil.Int64);
                 x.Column("id");
                 x.UnsavedValue(0);
-                x.Generator(Generators.Identity);
+                x.Generator(Generators.Increment);
                 
             });
-
-            Property(b => b.vehiclename, x => {
+            //VehicleName
+            Property(x => x.VehicleName, x => {
                 x.Type(NHibernateUtil.String);
                 x.Column("vehiclename");
                 x.Length(50);
             });
 
-            Property(b => b.vehicleplate, x => {
+            //VehiclePlate
+            Property(x => x.VehiclePlate, x => {
                 x.Type(NHibernateUtil.String);
                 x.Column("vehicleplate");
                 x.Length(50);
             });
 
-
+            // table name for this mapping
             Table("vehicle");
         }
 

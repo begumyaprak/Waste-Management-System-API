@@ -15,36 +15,37 @@ namespace AtikYonetimSistemi.Controllers
 
     public class ContainerController : ControllerBase
     {
-        private readonly IContainerMapperSession _session;
+        private readonly IMapperSession _session;
 
 
-        public ContainerController(IContainerMapperSession session)
+        public ContainerController(IMapperSession session)
         {
             _session = session;
 
         }
 
-
+        //method that returns all containers
         [HttpGet]
         [Route("GetContainers")]
         public IActionResult Index()
         {
-            var containers = _session.Container.ToList();
+            var containers = _session.Containers.ToList();
 
             return Ok(containers);
         }
 
-
+        //method that brings containers by vehicle
         [HttpGet]
         [Route("GetByVehicleId")]
         public IActionResult Get(int Id)
         {
 
-            var vehiclesContainer = _session.Container.ToList().Where(a => a.vehicleId == Id).FirstOrDefault();
+            var vehiclesContainer = _session.Containers.ToList().Where(a => a.VehicleId == Id);
 
             return Ok(vehiclesContainer);
         }
 
+        //method that add containers
         [HttpPost]
         public void Post([FromBody] Container container)
         {
@@ -68,7 +69,7 @@ namespace AtikYonetimSistemi.Controllers
         [HttpPut]
         public ActionResult<Container> Put([FromBody] Container request)
         {
-            Container container = _session.Container.Where(x => x.id == request.id).FirstOrDefault();
+            Container container = _session.Containers.Where(x => x.Id == request.Id).FirstOrDefault();
             if (container == null)
             {
                 return NotFound();
@@ -78,9 +79,9 @@ namespace AtikYonetimSistemi.Controllers
             {
                 _session.BeginTransaction();
 
-                container.containername = request.containername;
-                container.latitude = request.latitude;
-                container.longitude = request.longitude;
+                container.ContainerName = request.ContainerName;
+                container.Latitude = request.Latitude;
+                container.Longitude = request.Longitude;
 
 
 
@@ -102,11 +103,11 @@ namespace AtikYonetimSistemi.Controllers
             return Ok();
         }
 
-
+        //method that delete container 
         [HttpDelete("{id}")]
         public ActionResult<Container> Delete(int id)
         {
-            Container container = _session.Container.Where(x => x.id == id).FirstOrDefault();
+            Container container = _session.Containers.Where(x => x.Id == id).FirstOrDefault();
             if (container == null)
             {
                 return NotFound();
@@ -134,28 +135,6 @@ namespace AtikYonetimSistemi.Controllers
 
 
 
-        //[HttpGet]
-        //[Route("GetNNumber")]
-        //public IActionResult GetNumber(int id, int N)
-        //{
-        //    var vehiclesContainer = _session.Container.ToList().Where(a => a.vehicleId == id);
-
-
-        //    if (vehiclesContainer.Count() % N == 0)
-        //    {
-        //        var list = new List<>;
-
-        //        foreach (var item in vehiclesContainer)
-        //        {
-
-        //        }
-
-        //    }
-
-
-        //    return Ok();
-
-        //}
     }
 
 

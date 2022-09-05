@@ -8,20 +8,22 @@ using System.Threading.Tasks;
 namespace AtikYonetimSistemi.Context
 {
 
-    public class ContainerMapperSession : IContainerMapperSession
+    public class MapperSession : IMapperSession
     {
 
         private readonly ISession _session;
         private ITransaction _transaction;
 
-        public ContainerMapperSession(ISession session)
+
+        public MapperSession(ISession session)
         {
 
             _session = session;
 
         }
 
-        public IQueryable<Container> Container => _session.Query<Container>();
+        public IQueryable<Container> Containers => _session.Query<Container>();
+        public IQueryable<Vehicle> Vehicles => _session.Query<Vehicle>();
 
         public void BeginTransaction()
         {
@@ -29,14 +31,14 @@ namespace AtikYonetimSistemi.Context
         }
 
 
-        public async Task Commit()
+        public void  Commit()
         {
-            await _transaction.CommitAsync();
+            _transaction.Commit();
         }
 
-        public async Task Rollback()
+        public void Rollback()
         {
-            await _transaction.RollbackAsync();
+             _transaction.Rollback();
         }
 
 
@@ -50,19 +52,23 @@ namespace AtikYonetimSistemi.Context
         }
 
 
-        public async Task Save(Container entity)
+        public void Save<T>(T entity) where T : class
         {
-            await _session.SaveOrUpdateAsync(entity);
-
+            _session.Save(entity);
         }
 
-
-        public async Task Delete(Container entity)
+        public void Update<T>(T entity) where T : class
         {
-           await _session.DeleteAsync(entity);
+            _session.Update(entity);
         }
+
+        public void Delete<T>(T entity) where T : class
+        {
+            _session.Delete(entity);
+        }
+
     }
 
-   
+
 }
 
