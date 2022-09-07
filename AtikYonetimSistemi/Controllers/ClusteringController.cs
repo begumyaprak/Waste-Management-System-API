@@ -12,12 +12,12 @@ namespace AtikYonetimSistemi.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class ClusterDemoController : ControllerBase
+    public class ClusteringController : ControllerBase
     {
         private readonly IMapperSession _session;
 
 
-        public ClusterDemoController(IMapperSession session)
+        public ClusteringController(IMapperSession session)
         {
             _session = session;
 
