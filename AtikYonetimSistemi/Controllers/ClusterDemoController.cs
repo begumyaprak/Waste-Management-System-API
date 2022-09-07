@@ -26,12 +26,14 @@ namespace AtikYonetimSistemi.Controllers
         [HttpGet]
         public IActionResult GetGroups(int n, int id)
         {
-           
+
+            //başlangıç koordinatları
+            var startLat = 41.067890;
+            var startLong = 29.016060;
+
             //vehicle id'e göre listelenen containerlar
             var containers = _session.Containers.Where(a => a.VehicleId == id).ToList();
 
-            var startLat = 41.067890;
-            var startLong = 29.016060;
 
             //en yakından en  uzağa sıralandı 
              containers = containers.OrderBy(a => CalculateDistance(startLat, startLong, a.Latitude, a.Longitude)).ToList();
@@ -50,8 +52,7 @@ namespace AtikYonetimSistemi.Controllers
             //oluşan grupların listesi
             var groups = new List<List<Container>>();
 
-         
-
+            //uzaklıklara göre ve n sayısına göre yeni kümeleri oluşturan for döngüsü 
             var counter = 0;
             for (int i = 0; i < n; i++)
             {

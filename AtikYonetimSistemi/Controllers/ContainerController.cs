@@ -133,6 +133,21 @@ namespace AtikYonetimSistemi.Controllers
 
         }
 
+        [HttpGet]
+        [Route("GetClustered")]
+
+        public ActionResult<List<Container>> GetClustering(long id, int clusterNumber)
+        {
+            List<Container> vehicleContainerList = _session.Containers.Where(a => a.VehicleId == id).ToList();
+
+            var response = vehicleContainerList.Select((x, i) => new { Index = i, value = x })
+                .GroupBy(x => x.Index % clusterNumber)
+                .Select(x => x.Select(a => a.value).ToList())
+                .ToList();
+
+            return Ok(response);
+
+        }
 
 
     }
