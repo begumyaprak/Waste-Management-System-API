@@ -1,7 +1,3 @@
-
-# assignment-3-begumyaprak
-assignment-3-begumyaprak created by GitHub Classroom
-
 # Waste Management System
 
 ## Outputs
